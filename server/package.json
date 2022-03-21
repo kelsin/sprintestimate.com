@@ -1,0 +1,31 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "description": "sprintestimate.com node.js server",
+  "repository": "git@github.com:kelsin/sprintestimate.com.git",
+  "author": "Christopher Giroir <kelsin@valefor.com>",
+  "license": "MIT",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js | pino-pretty --colorize",
+    "lint": "eslint index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "pino": "^7.9.1",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.11.0",
+    "nodemon": "^2.0.15",
+    "pino-pretty": "^7.5.4"
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    }
+  }
+}
