@@ -12,8 +12,8 @@ const generateUserID = () => {
   return crypto.randomUUID();
 };
 
-const login = message => {
-  const id = generateUserID();
+const login = (message, id) => {
+  id = id || generateUserID();
   const user = {
     id,
     name: message.name,
@@ -59,6 +59,9 @@ app.get('/', (req, res) => {
 
 const wss = new ws.Server({ noServer: true });
 wss.on('connection', ws => {
+  userID = null;
+  sessionID = null;
+
   ws.on('message', data => {
     try {
       message = JSON.parse(data);
@@ -66,14 +69,24 @@ wss.on('connection', ws => {
 
       switch(message.type) {
       case 'login':
-        const user = login(message);
+        const user = login(message, userID);
+        userID = user.id;
         ws.send(JSON.stringify({
           type: 'login',
           user
         }));
         break;
       case 'createSession':
+        if (userID === null) {
+          ws.send(JSON.stringify({
+            type: 'error',
+            error: 'Must set user information before creating a session'
+          }));
+          break;
+        }
+
         const session = createSession();
+        sessionID = session.id;
         ws.send(JSON.stringify({
           type: 'sessionCreated',
           session

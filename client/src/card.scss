@@ -1,0 +1,17 @@
+div.card {
+  border-radius: 1em;
+  border: 5px solid black;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1em;
+
+  .card--name {
+    color: black;
+    font-size: 2em;
+  }
+
+  .card--points {
+    font-size: 6em;
+    min-width: 2em;
+  }
+}

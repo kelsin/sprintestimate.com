@@ -1,27 +1,35 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { HuePicker } from 'react-color';
 
 import { sendMessage } from './ws';
 
+import { hslToHex } from './utils';
 import { login } from './store/user';
+import Card from './Card';
 
-const Login = () => {
-  const [name, setName] = useState('');
-  const [color, setColor] = useState('#fff');
+const randomColor = hslToHex(Math.floor(Math.random() * 361), 100, 50);
+
+const User = () => {
   const user = useSelector(state => state.user);
+  const [name, setName] = useState(user.name || '');
+  const [color, setColor] = useState(user.color || randomColor);
+  const navigate = useNavigate();
 
   const nameHandler = event => setName(event.target.value);
   const colorHandler = color => setColor(color.hex);
-  const loginHandler = () => {
+  const save = () => {
+    window.localStorage.setItem('user', JSON.stringify({name, color}));
     sendMessage({type:"login",name,color});
+    navigate("/");
   };
 
   return (
     <div className="container">
       <div className="row">
         <div className="col">
-          <h1>Login</h1>
+          <h1>User Information</h1>
         </div>
       </div>
       <div className="row">
@@ -32,16 +40,22 @@ const Login = () => {
             <label htmlFor="color" className="form-label">Color</label>
             <input type="hidden" className="form-control" id="color" value={color}/>
             <HuePicker color={color} onChange={colorHandler}/>
-            <button type="button" className="btn btn-primary mt-3" onClick={loginHandler}>Login</button>
+            <button type="button" className="btn btn-primary mt-3" onClick={save}>Save</button>
           </form>
         </div>
         <div className="col-8">
           <h4>Example</h4>
-          {name} <div style={{height: "24px", width: "24px", backgroundColor: color}}/>
+          <div className="row">
+            {[1,2,3,5,8,"?","☕"].map(points => (
+              <div key={`example-${points}`} className="col">
+                <Card name={name} color={color} points={points}/>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default User;

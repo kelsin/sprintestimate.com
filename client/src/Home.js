@@ -1,27 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import { addError } from './store/errors';
 import { sendMessage } from './ws';
 
-import Login from './Login';
+import User from './User';
 
 const Home = () => {
   const session = useSelector(state => state.session);
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
 
+  // Redirect to /user page if you don't have user data at all
   if (!user.name) {
-    return <Login/>
+    return <Navigate to="/user" />
   }
-
-  if (session.id) {
-    return <Navigate to={`/${session.id}`} />;
-  }
-
-  const handler = () => {
-    dispatch(addError("Error!"));
-  };
 
   const newSession = () => {
     sendMessage({
@@ -32,8 +24,7 @@ const Home = () => {
   return (
     <div className="container">
       <h1>Home</h1>
-      <button onClick={newSession}>New Session</button>
-      <button onClick={handler}>Add Error</button>
+      <button className="btn btn-primary me-3" onClick={newSession}>New Session</button>
     </div>
   );
 };
