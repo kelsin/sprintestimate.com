@@ -20,7 +20,7 @@ const Session = () => {
         sessionID: params.id,
       });
     }
-  }, [connected, params.id]);
+  }, [send, connected, params.id]);
 
   if (!session.id || params.id !== session.id) {
     return (

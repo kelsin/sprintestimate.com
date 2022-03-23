@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 
 import Errors from "./Errors";

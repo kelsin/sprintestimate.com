@@ -26,52 +26,56 @@ const Socket = ({ children }) => {
   const send = (message) => ws.send(JSON.stringify(message));
   const ctx = { ws, send, connected };
 
-  const onOpen = (event) => {
-    setConnected(true);
-    console.log(`Websocket open to ${url}`);
-    if (user) {
-      send({ type: "login", ...user });
-    }
-  };
-
-  const onClose = (event) => {
-    setConnected(false);
-    console.log("Websocket dissconnected");
-
-    setTimeout(() => {
-      setWS(new WebSocket(url));
-    }, timeout);
-  };
-
-  const onMessage = (event) => {
-    try {
-      const message = JSON.parse(event.data);
-
-      console.log("Received message", message);
-
-      switch (message.type) {
-        case "login":
-          setUser(message.user);
-          break;
-        case "sessionCreated":
-          navigator.clipboard.writeText(url + message.session.id);
-          dispatch(sessionCreated(message.session));
-          navigate(`/${message.session.id}`);
-          break;
-        case "updateSession":
-          dispatch(updateSession(message.session));
-          navigate(`/${message.session.id}`);
-          break;
-        case "error":
-          dispatch(addError(message.message));
-          break;
-      }
-    } catch (err) {
-      console.log("Error parsing message:", event.data);
-    }
-  };
-
   useEffect(() => {
+    const effectSend = (message) => ws.send(JSON.stringify(message));
+
+    const onOpen = (event) => {
+      setConnected(true);
+      console.log(`Websocket open to ${url}`);
+      if (user) {
+        effectSend({ type: "login", ...user });
+      }
+    };
+
+    const onClose = (event) => {
+      setConnected(false);
+      console.log("Websocket dissconnected");
+
+      setTimeout(() => {
+        setWS(new WebSocket(url));
+      }, timeout);
+    };
+
+    const onMessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+
+        console.log("Received message", message);
+
+        switch (message.type) {
+          case "login":
+            setUser(message.user);
+            break;
+          case "sessionCreated":
+            navigator.clipboard.writeText(url + message.session.id);
+            dispatch(sessionCreated(message.session));
+            navigate(`/${message.session.id}`);
+            break;
+          case "updateSession":
+            dispatch(updateSession(message.session));
+            navigate(`/${message.session.id}`);
+            break;
+          case "error":
+            dispatch(addError(message.message));
+            break;
+          default:
+            console.error("Unknown message type", message);
+        }
+      } catch (err) {
+        console.log("Error parsing message:", event.data);
+      }
+    };
+
     ws.addEventListener("open", onOpen);
     ws.addEventListener("close", onClose);
     ws.addEventListener("message", onMessage);
@@ -81,7 +85,7 @@ const Socket = ({ children }) => {
       ws.removeEventListener("close", onClose);
       ws.removeEventListener("message", onMessage);
     };
-  }, [ws, setWS]);
+  }, [ws, setWS, dispatch, navigate, setUser, user]);
 
   return <Context.Provider value={ctx}>{children}</Context.Provider>;
 };

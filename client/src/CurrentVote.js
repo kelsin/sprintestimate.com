@@ -1,14 +1,12 @@
 import { useSelector } from "react-redux";
 
 import useUser from "./hooks/useUser";
-import useSocket from "./hooks/useSocket";
 import Card from "./Card";
 import NewVote from "./NewVote";
 import Vote from "./Vote";
 
 const CurrentVote = () => {
   const { users, current, creator } = useSelector((state) => state.session);
-  const { send } = useSocket();
   const [currentUser] = useUser();
   const isCreator = currentUser.id === creator;
 
@@ -26,15 +24,9 @@ const CurrentVote = () => {
     });
   }
 
-  const doneHandler = () => {
-    send({
-      type: "voteDone",
-    });
-  };
-
   const topic = current ? (
     current.topic.startsWith("http") ? (
-      <a target="_blank" href={current.topic}>
+      <a target="_blank" rel="noreferrer" href={current.topic}>
         {current.topic}
       </a>
     ) : (
