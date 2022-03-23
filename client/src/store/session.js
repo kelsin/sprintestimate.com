@@ -1,19 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const sessionSlice = createSlice({
-  name: 'session',
+  name: "session",
   initialState: {
     id: null,
     created: null,
     creator: null,
     users: {},
     current: null,
-    past: []
+    past: [],
   },
   reducers: {
-    sessionCreated: (state, action) => ({...state, ...action.payload}),
-    updateSession: (state, action) => ({...state, ...action.payload})
-  }
+    sessionCreated: (state, action) => ({ ...state, ...action.payload }),
+    updateSession: (state, action) => ({ ...state, ...action.payload }),
+  },
 });
 
 export const { sessionCreated, updateSession } = sessionSlice.actions;

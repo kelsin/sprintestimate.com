@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Routes, Route } from "react-router-dom";
 
-import Errors from './Errors';
-import Home from './Home';
-import Nav from './Nav';
-import Session from './Session';
-import User from './User';
+import Errors from "./Errors";
+import Home from "./Home";
+import Nav from "./Nav";
+import Session from "./Session";
+import User from "./User";
 
 function App() {
   return (

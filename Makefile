@@ -11,5 +11,4 @@ build:
 	yarn workspace client build
 
 lint:
-	yarn workspace server lint
-	yarn workspace client lint
+	yarn workspaces run lint

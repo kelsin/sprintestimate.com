@@ -1,4 +1,27 @@
 {
   "private": true,
-  "workspaces": ["server", "client"]
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "lint": "yarn workspaces run lint"
+  },
+  "dependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./client/**/*.js": "yarn --cwd client run eslint",
+    "./server/**/*.js": "yarn --cwd client run eslint",
+    "*.{js,json,md}": "yarn run prettier --write"
+  },
+  "devDependencies": {
+    "prettier": "^2.6.0"
+  }
 }
