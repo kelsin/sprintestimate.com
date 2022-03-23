@@ -1,27 +1,24 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { HuePicker } from 'react-color';
 
-import { sendMessage } from './ws';
-
-import { hslToHex } from './utils';
+import useUser from './hooks/useUser';
 import { login } from './store/user';
 import Card from './Card';
-
-const randomColor = hslToHex(Math.floor(Math.random() * 361), 100, 50);
+import { Context } from './Socket';
 
 const User = () => {
-  const user = useSelector(state => state.user);
-  const [name, setName] = useState(user.name || '');
-  const [color, setColor] = useState(user.color || randomColor);
+  const { send } = useContext(Context);
+  const [user] = useUser();
+  const [name, setName] = useState(user.name);
+  const [color, setColor] = useState(user.color);
   const navigate = useNavigate();
 
   const nameHandler = event => setName(event.target.value);
   const colorHandler = color => setColor(color.hex);
   const save = () => {
-    window.localStorage.setItem('user', JSON.stringify({name, color}));
-    sendMessage({type:"login",name,color});
+    send({type:"login",name,color});
     navigate("/");
   };
 
@@ -46,7 +43,7 @@ const User = () => {
         <div className="col-8">
           <h4>Example</h4>
           <div className="row">
-            {[1,2,3,5,8,"?","☕"].map(points => (
+            {[1,2,3,5,8,13,99,"?","…","☕"].map(points => (
               <div key={`example-${points}`} className="col">
                 <Card name={name} color={color} points={points}/>
               </div>

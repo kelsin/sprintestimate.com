@@ -4,6 +4,7 @@ div.card {
   font-weight: bold;
   text-align: center;
   margin-bottom: 1em;
+  box-shadow: 5px 5px 5px #666;
 
   .card--name {
     color: black;
@@ -13,5 +14,6 @@ div.card {
   .card--points {
     font-size: 6em;
     min-width: 2em;
+    text-shadow: 0.02em 0.02em 0.05em #666;
   }
 }

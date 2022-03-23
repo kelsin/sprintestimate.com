@@ -4,8 +4,8 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import './ws';
 import App from './App';
+import Socket from './Socket';
 import store from './store';
 
 // Main app styles
@@ -18,7 +18,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <Socket>
+          <App />
+        </Socket>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

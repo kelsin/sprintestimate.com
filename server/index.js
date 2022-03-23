@@ -5,49 +5,9 @@ const ws = require('ws');
 
 const app = express();
 
-const users = {};
-const sessions = {};
-
-const generateUserID = () => {
-  return crypto.randomUUID();
-};
-
-const login = (message, id) => {
-  id = id || generateUserID();
-  const user = {
-    id,
-    name: message.name,
-    color: message.color
-  };
-  users[id] = user;
-  return user;
-};
-
-const generateSessionID = () => {
-  while (true) {
-    let id = '';
-    for (let i = 0; i < 4; i++) {
-      id = id + String.fromCharCode(65 + crypto.randomInt(26));
-    }
-
-    if (sessions[id] === undefined) {
-      sessions[id] = true;
-      return id;
-    }
-  };
-};
-
-const createSession = () => {
-  const id = generateSessionID();
-  const session = {
-    id,
-    created: Date.now()
-  };
-
-  sessions[id] = session;
-
-  return session;
-};
+const handlers = require('./handlers');
+const messages = require('./messages');
+const state = require('./state');
 
 // Set log level
 const level = process.env.NODE_ENV === "production" ? 'info' : 'debug';
@@ -57,43 +17,54 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+const sockets = {};
 const wss = new ws.Server({ noServer: true });
 wss.on('connection', ws => {
-  userID = null;
-  sessionID = null;
+  let userID = null;
+  let sessionID = null;
+
+  const setUserID = id => {
+    userID = id;
+    sockets[userID] = ws;
+  };
+  const setSessionID = id => {
+    sessionID = id;
+  };
+  const send = msg => ws.send(JSON.stringify(msg));
+  const broadcast = msg => {
+    const session = state.session(sessionID);
+    Object.keys(session.users).forEach(id => {
+      const socket = sockets[id];
+      socket.send(JSON.stringify(msg));
+    });
+  };
+
+  ws.on('close', (code, reason) => {
+    // Remove user from their session
+    handlers['close']({ userID, sessionID, broadcast });
+    delete sockets[userID]
+  });
 
   ws.on('message', data => {
     try {
       message = JSON.parse(data);
       logger.debug(message, 'received');
 
-      switch(message.type) {
-      case 'login':
-        const user = login(message, userID);
-        userID = user.id;
-        ws.send(JSON.stringify({
-          type: 'login',
-          user
-        }));
-        break;
-      case 'createSession':
-        if (userID === null) {
-          ws.send(JSON.stringify({
-            type: 'error',
-            error: 'Must set user information before creating a session'
-          }));
-          break;
-        }
-
-        const session = createSession();
-        sessionID = session.id;
-        ws.send(JSON.stringify({
-          type: 'sessionCreated',
-          session
-        }));
-        break;
-      }
+      handlers[message.type]({
+        message,
+        userID,
+        setUserID,
+        sessionID,
+        setSessionID,
+        send,
+        broadcast
+      });
     } catch (err) {
+      if (err instanceof state.APIError) {
+        send(messages.error(err.message));
+        return
+      }
+
       logger.error(err, 'error parsing message');
     }
   });

@@ -8,17 +8,7 @@ import Nav from './Nav';
 import Session from './Session';
 import User from './User';
 
-import { sendMessage } from './ws';
-
 function App() {
-  const user = useSelector(state => state.user);
-
-  // useEffect(() => {
-  //   if(!user.id) {
-  //     sendMessage({type:"login", ...user});
-  //   }
-  // }, [user]);
-
   return (
     <div>
       <Nav />

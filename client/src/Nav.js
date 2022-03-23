@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
+import useUser from './hooks/useUser';
+
 const Nav = () => {
-  const user = useSelector(state => state.user);
+  const [user] = useUser();
   const session = useSelector(state => state.session);
 
   return (
@@ -24,14 +26,12 @@ const Nav = () => {
             ) }
           </ul>
         </div>
-        { user && (
-          <div className="d-flex">
-            <Link to="/user">{user.name}</Link>
-            <Link to="/user">
-              <div className="ms-3" style={{height:"24px", width:"24px", backgroundColor: user.color}}/>
-            </Link>
-          </div>
-        ) }
+        <div className="d-flex">
+          <Link to="/user">{user.name}</Link>
+          <Link to="/user">
+            <div className="ms-3" style={{height:"24px", width:"24px", backgroundColor: user.color}}/>
+          </Link>
+        </div>
       </div>
     </nav>
   );
