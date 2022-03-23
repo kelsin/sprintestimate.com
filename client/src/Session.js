@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import CurrentVote from "./CurrentVote";
 import PastVotes from "./PastVotes";
 
+import useUser from "./hooks/useUser";
 import useSocket from "./hooks/useSocket";
 
 const Session = () => {
@@ -12,15 +13,16 @@ const Session = () => {
   const [copied, setCopied] = useState("");
   const params = useParams();
   const session = useSelector((state) => state.session);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (connected) {
+    if (connected && user.id && (!session.id || params.id !== session.id)) {
       send({
         type: "joinSession",
         sessionID: params.id,
       });
     }
-  }, [send, connected, params.id]);
+  }, [send, connected, user, session, params]);
 
   if (!session.id || params.id !== session.id) {
     return (
