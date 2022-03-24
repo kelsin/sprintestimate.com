@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Docker Login
+      env:
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u kelsin -p $DOCKER_PASSWORD
+        VERSION=$(git rev-parse --short "$GITHUB_SHA")
+    - name: Docker Build
+      run: |
+        docker build . --file Dockerfile --tag kelsin/sprintestimate.com:$VERSION
+    - name: Docker Push
+      run: |
+        docker push kelsin/sprintestimate.com:$VERSION
+        docker tag kelsin/sprintestimate.com:$VERSION kelsin/sprintestimate.com:latest
+        docker push kelsin/sprintestimate.com:latest
