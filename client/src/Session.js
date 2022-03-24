@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import CurrentVote from "./CurrentVote";
 import PastVotes from "./PastVotes";
 
 import useSocket from "./hooks/useSocket";
+import useUser from "./hooks/useUser";
 
 const Session = () => {
   const { send, connected } = useSocket();
   const [copied, setCopied] = useState("");
   const params = useParams();
   const session = useSelector((state) => state.session);
-  const user = useSelector((state) => state.user);
+  const [user] = useUser();
 
   useEffect(() => {
     if (connected && user.id && (!session.id || params.id !== session.id)) {
@@ -22,6 +23,11 @@ const Session = () => {
       });
     }
   }, [send, connected, user, session, params]);
+
+  // Redirect to /user page if you don't have user data at all
+  if (!user.name) {
+    return <Navigate to={`/user?redirect=/${params.id}`} />;
+  }
 
   if (!session.id || params.id !== session.id) {
     return (

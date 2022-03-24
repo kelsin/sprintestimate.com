@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { HuePicker } from "react-color";
 
 import useUser from "./hooks/useUser";
@@ -8,20 +8,29 @@ import { Context } from "./Socket";
 
 const User = () => {
   const { send } = useContext(Context);
-  const [user] = useUser();
+  const [user, updateUser] = useUser();
   const [name, setName] = useState(user.name);
   const [color, setColor] = useState(user.color);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const nameHandler = (event) => setName(event.target.value);
   const colorHandler = (color) => setColor(color.hex);
+  const redirect = searchParams.get("redirect");
+
   const save = () => {
     const msg = { type: "login", name, color };
     if (user) {
       msg.id = user.id;
     }
+    updateUser({ name, color });
     send(msg);
-    navigate("/");
+
+    if (redirect) {
+      navigate(redirect);
+    } else {
+      navigate("/");
+    }
   };
 
   return (

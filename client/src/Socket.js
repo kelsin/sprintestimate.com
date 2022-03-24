@@ -32,7 +32,7 @@ const Socket = ({ children }) => {
     const onOpen = (event) => {
       setConnected(true);
       console.log(`Websocket open to ${url}`);
-      if (user) {
+      if (user && user.name) {
         effectSend({ type: "login", ...user });
       }
     };
