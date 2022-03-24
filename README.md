@@ -1,5 +1,7 @@
 # Sprint Estimate
 
+[![Docker Image](https://github.com/kelsin/sprintestimate.com/actions/workflows/docker.yml/badge.svg)](https://github.com/kelsin/sprintestimate.com/actions/workflows/docker.yml)
+
 This is the code powering https://sprintestimate.com
 
 ## Client
