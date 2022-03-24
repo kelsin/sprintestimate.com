@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const express = require("express");
+const path = require("path");
 const pino = require("pino");
 const ws = require("ws");
 
@@ -13,8 +14,14 @@ const state = require("./state");
 const level = process.env.NODE_ENV === "production" ? "info" : "debug";
 const logger = pino({ level });
 
-app.get("/", (req, res) => {
+app.use(express.static(path.resolve(__dirname, "../../client/build")));
+
+app.get("/api", (req, res) => {
   res.send("Hello World!");
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../client/build/index.html"));
 });
 
 const sockets = {};

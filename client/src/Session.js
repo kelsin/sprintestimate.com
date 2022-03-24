@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import CurrentVote from "./CurrentVote";
 import PastVotes from "./PastVotes";
 
-import useUser from "./hooks/useUser";
 import useSocket from "./hooks/useSocket";
 
 const Session = () => {
