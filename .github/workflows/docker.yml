@@ -16,12 +16,13 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u kelsin -p $DOCKER_PASSWORD
-        VERSION=$(git rev-parse --short "$GITHUB_SHA")
     - name: Docker Build
       run: |
+        VERSION=$(git rev-parse --short "$GITHUB_SHA")
         docker build . --file Dockerfile --tag kelsin/sprintestimate.com:$VERSION
     - name: Docker Push
       run: |
+        VERSION=$(git rev-parse --short "$GITHUB_SHA")
         docker push kelsin/sprintestimate.com:$VERSION
         docker tag kelsin/sprintestimate.com:$VERSION kelsin/sprintestimate.com:latest
         docker push kelsin/sprintestimate.com:latest
