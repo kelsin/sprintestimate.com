@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sprintestimate
+  namespace: sprintestimate
+  labels:
+    app: sprintestimate
+  annotations:
+    keel.sh/policy: force
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sprintestimate
+  template:
+    metadata:
+      labels:
+        app: sprintestimate
+    spec:
+      containers:
+        - name: sprintestimate
+          image: kelsin/sprintestimate.com
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sprintestimate
+  namespace: sprintestimate
+  labels:
+    app: sprintestimate
+spec:
+  selector:
+    app: sprintestimate
+  ports:
+    - port: 3000
+      protocol: TCP
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sprintestimate
+  namespace: sprintestimate
+  labels:
+    app: sprintestimate
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    external-dns.alpha.kubernetes.io/hostname: sprintestimate.com,www.sprintestimate.com
+    nginx.org/server-snippets: |
+      if ($host ~ ^www\.sprintestimate\.com$) {
+        return 301 https://sprintestimate.com$request_uri;
+      }
+    nginx.org/location-snippets: |
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "Upgrade";
+      proxy_set_header Host $host;
+spec:
+  rules:
+    - host: sprintestimate.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: sprintestimate
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix
+    - host: www.sprintestimate.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: sprintestimate
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - sprintestimate.com
+        - www.sprintestimate.com
+      secretName: sprintestimate-tls
