@@ -1,0 +1,13 @@
+@import "variables.scss";
+
+.session_link {
+  text-align: center;
+  font-size: 12pt;
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: inline;
+  }
+}

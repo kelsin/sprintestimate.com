@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useSocket from "./hooks/useSocket";
 
+import "./vote.scss";
+
 const Vote = () => {
   const [currentVote, setCurrentVote] = useState(null);
   const { send } = useSocket();
@@ -20,25 +22,22 @@ const Vote = () => {
   };
 
   return (
-    <div className="row">
-      <div className="col">
-        <div className="btn-group">
-          {[1, 2, 3, 5, 8, 13, 99, "?", "☕"].map((points) => {
-            let className =
-              points === currentVote
-                ? "btn btn-primary"
-                : "btn btn-outline-primary";
-            return (
-              <button
-                className={className}
-                key={`vote-${points}`}
-                onClick={() => vote(points)}
-              >
-                {points}
-              </button>
-            );
-          })}
-        </div>
+    <div className="vote">
+      <h4>Your Vote</h4>
+      <div className="vote_buttons">
+        {[1, 2, 3, 5, 8, 13, 99, "?", "☕"].map((points) => {
+          let className =
+            points === currentVote ? "button" : "button button--inactive";
+          return (
+            <button
+              className={className}
+              key={`vote-${points}`}
+              onClick={() => vote(points)}
+            >
+              {points}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

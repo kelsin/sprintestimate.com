@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeError } from "./store/errors";
 
+import "./errors.scss";
+
 const Errors = () => {
   const errors = useSelector((state) => state.errors);
   const dispatch = useDispatch();
@@ -10,23 +12,10 @@ const Errors = () => {
   };
 
   return (
-    <div className="errors container pt-3">
+    <div className="errors">
       {errors.map((error, i) => (
-        <div className="row" key={`error-${i}`}>
-          <div className="col">
-            <div
-              className="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              {error}
-              <button
-                type="button"
-                className="btn-close"
-                onClick={() => closeError(i)}
-                aria-label="Close"
-              ></button>
-            </div>
-          </div>
+        <div className="error" key={`error-${i}`} onClick={() => closeError(i)}>
+          {error}
         </div>
       ))}
     </div>

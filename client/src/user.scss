@@ -1,0 +1,22 @@
+@import "variables.scss";
+
+.prefs__label {
+  font-size: 18pt;
+  height: 60px;
+  line-height: 60px;
+  margin-right: 1em;
+}
+
+.prefs__input {
+  width: 300px;
+  font-size: 18pt;
+
+}
+
+.prefs__color {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1em;
+}

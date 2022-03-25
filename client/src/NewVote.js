@@ -16,18 +16,17 @@ const NewVote = () => {
   };
 
   return (
-    <div className="row">
-      <div className="col">
-        <input
-          type="text"
-          value={topic}
-          placeholder="Topic"
-          onChange={topicHandler}
-        />
-        <button className="btn btn-primary" onClick={newVoteHandler}>
-          New Vote
-        </button>
-      </div>
+    <div className="new_vote">
+      <input
+        className="new_vote__input"
+        type="text"
+        value={topic}
+        placeholder="Topic"
+        onChange={topicHandler}
+      />
+      <button className="button new_vote__button" onClick={newVoteHandler}>
+        New Vote
+      </button>
     </div>
   );
 };

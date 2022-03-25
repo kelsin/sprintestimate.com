@@ -8,7 +8,7 @@ import User from "./User";
 
 function App() {
   return (
-    <div>
+    <div className="app">
       <Nav />
       <Errors />
       <Routes>

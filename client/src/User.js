@@ -6,6 +6,8 @@ import useUser from "./hooks/useUser";
 import Card from "./Card";
 import { Context } from "./Socket";
 
+import "./user.scss";
+
 const User = () => {
   const { send } = useContext(Context);
   const [user, updateUser] = useUser();
@@ -34,55 +36,47 @@ const User = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col">
-          <h1>User Information</h1>
+    <div className="page">
+      <h1>User Information</h1>
+      <p>
+        Please type in the name you want displayed on your poker cards and
+        choose a favorite color.
+      </p>
+      <div className="form prefs">
+        <label htmlFor="name" className="prefs__label">
+          Name
+        </label>
+        <input
+          type="text"
+          className="prefs__input"
+          id="name"
+          placeholder="name"
+          value={name}
+          onChange={nameHandler}
+        />
+        <input
+          type="hidden"
+          className="prefs__input"
+          id="color"
+          value={color}
+        />
+        <div className="prefs__color">
+          <HuePicker color={color} onChange={colorHandler} />
         </div>
+        <button type="button" className="button prefs__button" onClick={save}>
+          Save
+        </button>
       </div>
-      <div className="row">
-        <div className="col">
-          <form>
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              placeholder="name"
-              value={name}
-              onChange={nameHandler}
-            />
-            <label htmlFor="color" className="form-label">
-              Color
-            </label>
-            <input
-              type="hidden"
-              className="form-control"
-              id="color"
-              value={color}
-            />
-            <HuePicker color={color} onChange={colorHandler} />
-            <button
-              type="button"
-              className="btn btn-primary mt-3"
-              onClick={save}
-            >
-              Save
-            </button>
-          </form>
-        </div>
-        <div className="col-8">
-          <h4>Example</h4>
-          <div className="row">
-            {[1, 2, 3, 5, 8, 13, 99, "?", "…", "☕"].map((points) => (
-              <div key={`example-${points}`} className="col">
-                <Card name={name} color={color} points={points} />
-              </div>
-            ))}
-          </div>
-        </div>
+      <h3>Example</h3>
+      <div className="cards">
+        {[1, 2, 3, 5, 8, 13, 99, "?", "☕"].map((points) => (
+          <Card
+            key={`example-${points}`}
+            name={name}
+            color={color}
+            points={points}
+          />
+        ))}
       </div>
     </div>
   );

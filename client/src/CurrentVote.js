@@ -17,7 +17,7 @@ const CurrentVote = () => {
       const points =
         id === currentUser.id ? current.votes[id] : !!current.votes[id];
       return (
-        <div key={`current-vote-${id}`} className="col">
+        <div key={`current-vote-${id}`} className="cards">
           <Card name={user.name} color={user.color} points={points} />
         </div>
       );
@@ -38,11 +38,11 @@ const CurrentVote = () => {
     <>
       {isCreator && <NewVote />}
       {current && <Vote />}
-      <div className="row">
-        <div className="col">
+      <div className="vote">
+        <div className="vote__topic">
           <h3>{topic}</h3>
         </div>
-        {cards}
+        <div className="cards">{cards}</div>
       </div>
     </>
   );

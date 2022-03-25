@@ -1,15 +1,55 @@
-@import "~bootstrap/scss/bootstrap";
+@import "~normalize.css/normalize.css";
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+@import "variables.scss";
 
-// body {
-//   margin: 0;
-//   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-//     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-//     sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-// }
+body {
+  font-family: 'Work Sans', sans-serif;
+  background-color: #eee;
+}
 
-// code {
-//   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-//     monospace;
-// }
+@media (min-width: 1260px) {
+  .app {
+    width: 1260px;
+    margin: 0 auto;
+    padding: 1em;
+    box-shadow: 3px 3px 15px #333;
+    background-color: $white;
+    border-radius: 0 0 8px 8px;
+  }
+}
+
+h1 {
+  font-size: 48pt;
+  text-align: center;
+}
+
+h3 {
+  font-size: 24pt;
+  text-align: center;
+}
+
+
+p {
+  text-align: center;
+  font-size: 16pt;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  background-color: $primary;
+  font-size: 20pt;
+  font-weight: bold;
+  padding: 0.3em 0.5em;
+  color: $white;
+  border-radius: 8px;
+  border: 2px solid #666;
+
+  &.button--inactive {
+    background-color: $white;
+    color: #222;
+  }
+}

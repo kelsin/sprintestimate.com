@@ -11,9 +11,6 @@ import store from "./store";
 // Main app styles
 import "./index.scss";
 
-// Bootstrap
-import "bootstrap";
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

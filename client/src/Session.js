@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -8,9 +8,10 @@ import PastVotes from "./PastVotes";
 import useSocket from "./hooks/useSocket";
 import useUser from "./hooks/useUser";
 
+import "./session.scss";
+
 const Session = () => {
   const { send, connected } = useSocket();
-  const [copied, setCopied] = useState("");
   const params = useParams();
   const session = useSelector((state) => state.session);
   const [user] = useUser();
@@ -31,7 +32,7 @@ const Session = () => {
 
   if (!session.id || params.id !== session.id) {
     return (
-      <div className="container">
+      <div className="page">
         <h1>Joining {params.id}</h1>
       </div>
     );
@@ -39,19 +40,18 @@ const Session = () => {
 
   const url = `${window.location.origin}/${params.id}`;
   const copyURLHandler = () => {
-    navigator.clipboard.writeText(url).then(() => setCopied(" - copied!"));
+    navigator.clipboard.writeText(url);
   };
 
   return (
-    <div className="container">
+    <div className="page">
       <h1>Session {params.id}</h1>
-      <h5>
+      <h4 className="session_link">
         🔗{" "}
-        <button type="button" className="btn btn-link" onClick={copyURLHandler}>
+        <button type="button" onClick={copyURLHandler}>
           {url}
         </button>
-        {copied}
-      </h5>
+      </h4>
       <CurrentVote />
       <PastVotes />
     </div>

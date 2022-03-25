@@ -1,19 +1,48 @@
-div.card {
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
   border-radius: 1em;
-  border: 5px solid black;
+  border: 6px solid black;
   font-weight: bold;
   text-align: center;
   margin-bottom: 1em;
-  box-shadow: 5px 5px 5px #666;
+  box-shadow: 5px 5px 10px #666;
+  width: 180px;
+  height: 160px;
 
-  .card--name {
+  .card__name {
     color: black;
-    font-size: 2em;
+    font-size: 18pt;
+    padding: 8px 0;
   }
 
-  .card--points {
-    font-size: 6em;
-    min-width: 2em;
-    text-shadow: 0.02em 0.02em 0.05em #666;
+  .card__points {
+    font-size: 74pt;
+  }
+}
+
+.cards--mini {
+  .card {
+    border-radius: 1em;
+    border: 6px solid black;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1em;
+    box-shadow: 5px 5px 10px #666;
+    width: 90px;
+    height: 90px;
+
+    .card__name {
+      font-size: 10pt;
+    }
+
+    .card__points {
+      font-size: 42px;
+    }
   }
 }

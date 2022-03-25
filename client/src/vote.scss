@@ -1,0 +1,66 @@
+@import "variables.scss";
+
+.new_vote {
+  text-align: center;
+}
+
+.new_vote__input {
+  width: 300px;
+  font-size: 18pt;
+}
+
+.new_vote__button {
+  margin-left: 1em;
+}
+
+.vote {
+  width: 70%;
+  margin: 0 auto;
+  h4 {
+    margin: 1em 0 0 0;
+    border-bottom: 1px solid #999;
+    text-align: center;
+    font-style: italic;
+    color: #999;
+  }
+}
+
+.vote_buttons {
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.vote__topic {
+  h3 {
+    margin: 1em 0 0.3em 0;
+    border-bottom: 1px solid #999;
+    text-align: center;
+    color: #444;
+
+    a {
+      text-decoration: none;
+      color: #444;
+    }
+  }
+}
+
+.vote--past {
+  width: 45%;
+  .vote__topic {
+    h3 {
+      font-size: 16pt;
+      color: #999;
+    }
+  }
+}
+
+.vote--past .vote__result {
+  color: #666;
+  font-size: 42pt;
+  font-weight: bold;
+  height: 100px;
+  line-height: 100px;
+}

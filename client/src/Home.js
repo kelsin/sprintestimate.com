@@ -4,6 +4,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 import useSocket from "./hooks/useSocket";
 import useUser from "./hooks/useUser";
 
+import "./home.scss";
+
 const Home = () => {
   const { send } = useSocket();
   const [user] = useUser();
@@ -26,20 +28,29 @@ const Home = () => {
   };
 
   return (
-    <div className="container">
-      <h1>Home</h1>
-      <button className="btn btn-primary me-3" onClick={newSession}>
-        New Session
-      </button>
-      <input
-        type="text"
-        value={id}
-        onChange={(event) => setID(event.target.value)}
-        placeholder="Session ID"
-      />
-      <button className="btn btn-primary me-3" onClick={joinSession}>
-        Join Session
-      </button>
+    <div className="page">
+      <h1>Sprint Estimate</h1>
+      <p>
+        Create a sesion and invite your coworkers to easily play planning poker!
+      </p>
+      <div className="form">
+        <button className="button" onClick={newSession}>
+          New Session
+        </button>
+      </div>
+      <p>If you have a session code from a friend, enter it here to join in!</p>
+      <div className="form join_session">
+        <input
+          className="join_session__input"
+          type="text"
+          value={id}
+          onChange={(event) => setID(event.target.value)}
+          placeholder="Session ID"
+        />
+        <button className="button join_session__button" onClick={joinSession}>
+          Join Session
+        </button>
+      </div>
     </div>
   );
 };

@@ -46,13 +46,13 @@ const PastVote = ({ users, vote }) => {
   const result = getResult(vote.votes, users);
 
   return (
-    <div className="row">
-      <div className="col">
+    <div className="vote vote--past">
+      <div className="vote__topic">
         <h3>{topic}</h3>
       </div>
-      {cards}
-      <div className="col">
-        <h1>{result}</h1>
+      <div className="cards cards--mini">
+        {cards}
+        <div className="vote__result">↦ {result}</div>
       </div>
     </div>
   );
