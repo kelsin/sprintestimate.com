@@ -1,8 +1,6 @@
 import { useState } from "react";
 import useSocket from "./hooks/useSocket";
 
-import "./vote.scss";
-
 const Vote = () => {
   const [currentVote, setCurrentVote] = useState(null);
   const { send } = useSocket();

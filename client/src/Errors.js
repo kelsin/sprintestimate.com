@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeError } from "./store/errors";
 
-import "./errors.scss";
-
 const Errors = () => {
   const errors = useSelector((state) => state.errors);
   const dispatch = useDispatch();

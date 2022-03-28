@@ -6,8 +6,6 @@ import useUser from "./hooks/useUser";
 import Card from "./Card";
 import { Context } from "./Socket";
 
-import "./user.scss";
-
 const User = () => {
   const { send } = useContext(Context);
   const [user, updateUser] = useUser();

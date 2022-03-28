@@ -1,10 +1,34 @@
 @import "~normalize.css/normalize.css";
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
-@import "variables.scss";
+
+$primary: #256EFF;
+$secondary: #f58f29;
+$warning: #721817;
+$white: #fefefe;
 
 body {
   font-family: 'Work Sans', sans-serif;
   background-color: #eee;
+}
+
+.session_link {
+  text-align: center;
+  font-size: 12pt;
+
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: inline;
+  }
+}
+
+.join_session__input {
+  width: 20em;
+}
+
+.join_session__button {
+  margin-left: 1em;
 }
 
 @media (min-width: 1260px) {
@@ -47,9 +71,230 @@ p {
   color: $white;
   border-radius: 8px;
   border: 2px solid #666;
+  cursor: pointer;
 
   &.button--inactive {
     background-color: $white;
     color: #222;
   }
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  border-radius: 1em;
+  border: 6px solid black;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1em;
+  box-shadow: 5px 5px 10px #666;
+  width: 180px;
+  height: 160px;
+
+  .card__name {
+    color: black;
+    font-size: 18pt;
+    padding: 8px 0;
+  }
+
+  .card__points {
+    font-size: 74pt;
+  }
+}
+
+.cards--mini {
+  .card {
+    border-radius: 1em;
+    border: 6px solid black;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1em;
+    box-shadow: 5px 5px 10px #666;
+    width: 90px;
+    height: 90px;
+
+    .card__name {
+      font-size: 10pt;
+    }
+
+    .card__points {
+      font-size: 42px;
+    }
+  }
+}
+
+.errors {
+  display: flex;
+  flex-direction: column;
+
+  .error {
+    margin: 1em 0;
+    border-radius: 5px;
+    border: 3px solid #333;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: $warning;
+    padding: 0.3em 0.5em;
+    color: $white;
+    font-size: 16pt;
+    cursor: pointer;
+  }
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 1em;
+  font-size: 20pt;
+  font-weight: bold;
+  box-sizing: border-box;
+  color: $white;
+  background-color: $primary;
+  text-shadow: 2px 2px 3px black;
+  border-radius: 5px;
+
+  a {
+    color: $white;
+    text-decoration: none;
+  }
+}
+
+.nav__logo {
+  height: 100px;
+  width: 100px;
+  font-size: 80px;
+  text-decoration: none;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.nav__menu {
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  display: flex;
+  vertical-align: middle;
+  justify-content: flex-start;
+  list-style-type: none;
+  overflow: visible;
+}
+
+.nav__menuitem {
+  margin: 0 1em;
+  padding: 0;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & .active {
+    text-decoration: underline;
+  }
+}
+
+.nav .user {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.user__color {
+  height: 32px;
+  width: 32px;
+  border-radius: 5px;
+  border: 3px solid #222;
+}
+
+.new_vote {
+  text-align: center;
+}
+
+.new_vote__input {
+  width: 300px;
+  font-size: 18pt;
+}
+
+.new_vote__button {
+  margin-left: 1em;
+}
+
+.vote {
+  width: 70%;
+  margin: 0 auto;
+  h4 {
+    margin: 1em 0 0 0;
+    border-bottom: 1px solid #999;
+    text-align: center;
+    font-style: italic;
+    color: #999;
+  }
+}
+
+.vote_buttons {
+  margin: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.vote__topic {
+  h3 {
+    margin: 1em 0 0.3em 0;
+    border-bottom: 1px solid #999;
+    text-align: center;
+    color: #444;
+
+    a {
+      text-decoration: none;
+      color: #444;
+    }
+  }
+}
+
+.vote--past {
+  width: 45%;
+  .vote__topic {
+    h3 {
+      font-size: 16pt;
+      color: #999;
+    }
+  }
+}
+
+.vote--past .vote__result {
+  color: #666;
+  font-size: 42pt;
+  font-weight: bold;
+  height: 100px;
+  line-height: 100px;
+}
+
+.prefs__label {
+  font-size: 18pt;
+  height: 60px;
+  line-height: 60px;
+  margin-right: 1em;
+}
+
+.prefs__input {
+  width: 300px;
+  font-size: 18pt;
+}
+
+.prefs__color {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1em;
 }

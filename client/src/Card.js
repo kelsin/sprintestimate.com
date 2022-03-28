@@ -1,5 +1,3 @@
-import "./card.scss";
-
 const Card = ({ hidden, name, color, points }) => {
   const displayPoints = points === true ? "✓" : points || "…";
 

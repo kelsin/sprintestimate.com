@@ -4,8 +4,6 @@ import { Link, NavLink } from "react-router-dom";
 import useSocket from "./hooks/useSocket";
 import useUser from "./hooks/useUser";
 
-import "./nav.scss";
-
 const Nav = () => {
   const { connected } = useSocket();
   const [user] = useUser();

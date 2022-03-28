@@ -8,8 +8,6 @@ import PastVotes from "./PastVotes";
 import useSocket from "./hooks/useSocket";
 import useUser from "./hooks/useUser";
 
-import "./session.scss";
-
 const Session = () => {
   const { send, connected } = useSocket();
   const params = useParams();

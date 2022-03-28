@@ -4,8 +4,6 @@ import { Navigate, useNavigate } from "react-router-dom";
 import useSocket from "./hooks/useSocket";
 import useUser from "./hooks/useUser";
 
-import "./home.scss";
-
 const Home = () => {
   const { send } = useSocket();
   const [user] = useUser();
