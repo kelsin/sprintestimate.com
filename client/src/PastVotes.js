@@ -37,7 +37,7 @@ const PastVote = ({ users, vote }) => {
   const topic = vote ? (
     vote.topic.startsWith("http") ? (
       <a target="_blank" rel="noreferrer" href={vote.topic}>
-        {vote.topic}
+        🔗 {vote.topic}
       </a>
     ) : (
       vote.topic

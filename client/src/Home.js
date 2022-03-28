@@ -29,7 +29,8 @@ const Home = () => {
     <div className="page">
       <h1>Sprint Estimate</h1>
       <p>
-        Create a sesion and invite your coworkers to easily play planning poker!
+        Create a session and invite your coworkers to easily play planning
+        poker!
       </p>
       <div className="form">
         <button className="button" onClick={newSession}>

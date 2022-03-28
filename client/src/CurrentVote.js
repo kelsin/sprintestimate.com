@@ -27,7 +27,7 @@ const CurrentVote = () => {
   const topic = current ? (
     current.topic.startsWith("http") ? (
       <a target="_blank" rel="noreferrer" href={current.topic}>
-        {current.topic}
+        🔗 {current.topic}
       </a>
     ) : (
       current.topic

@@ -21,8 +21,8 @@ const Vote = () => {
 
   return (
     <div className="vote">
-      <h4>Your Vote</h4>
       <div className="vote_buttons">
+        <h4>Your Vote:</h4>
         {[1, 2, 3, 5, 8, 13, 99, "?", "☕"].map((points) => {
           let className =
             points === currentVote ? "button" : "button button--inactive";
