@@ -32,7 +32,8 @@ wss.on("connection", (ws) => {
 
   const setUserID = (id) => {
     userID = id;
-    sockets[userID] = ws;
+    sockets[userID] ||= [];
+    sockets[userID].push(ws);
   };
   const setSessionID = (id) => {
     sessionID = id;
@@ -42,8 +43,9 @@ wss.on("connection", (ws) => {
     const session = state.session(sessionID);
     if (session) {
       Object.keys(session.users).forEach((id) => {
-        const socket = sockets[id];
-        socket.send(JSON.stringify(msg));
+        (sockets[id] || []).forEach((socket) => {
+          socket.send(JSON.stringify(msg));
+        });
       });
     }
   };
@@ -51,7 +53,7 @@ wss.on("connection", (ws) => {
   ws.on("close", (code, reason) => {
     // Remove user from their session
     handlers["close"]({ userID, sessionID, broadcast });
-    delete sockets[userID];
+    sockets[userID] = sockets[userID].filter(s => s !== ws);
   });
 
   ws.on("message", (data) => {

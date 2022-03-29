@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { addError } from "./store/errors";
@@ -22,6 +22,7 @@ const Socket = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user, setUser] = useUser();
+  const session = useSelector((state) => state.session);
 
   const send = (message) => ws.send(JSON.stringify(message));
   const ctx = { ws, send, connected };
@@ -34,6 +35,9 @@ const Socket = ({ children }) => {
       console.log(`Websocket open to ${url}`);
       if (user && user.name) {
         effectSend({ type: "login", ...user });
+        if (session.id) {
+          effectSend({ type: "joinSession", sessionID: session.id });
+        }
       }
     };
 
@@ -85,7 +89,7 @@ const Socket = ({ children }) => {
       ws.removeEventListener("close", onClose);
       ws.removeEventListener("message", onMessage);
     };
-  }, [ws, setWS, dispatch, navigate, setUser, user]);
+  }, [ws, setWS, dispatch, navigate, setUser, user, session]);
 
   return <Context.Provider value={ctx}>{children}</Context.Provider>;
 };

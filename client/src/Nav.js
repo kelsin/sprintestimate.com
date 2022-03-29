@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 
-import useSocket from "./hooks/useSocket";
 import useUser from "./hooks/useUser";
 
 const Nav = () => {

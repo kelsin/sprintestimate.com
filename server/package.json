@@ -15,7 +15,6 @@
   "dependencies": {
     "express": "^4.17.3",
     "pino": "^7.9.1",
-    "ramda": "^0.28.0",
     "ws": "^8.5.0"
   },
   "devDependencies": {

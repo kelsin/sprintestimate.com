@@ -1,8 +1,6 @@
 const state = require("./state");
 const messages = require("./messages");
 
-const map = require("ramda").map;
-
 const login = ({ message, setUserID, send }) => {
   const user = state.login(message);
   setUserID(user.id);
