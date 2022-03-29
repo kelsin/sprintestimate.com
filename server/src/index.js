@@ -24,16 +24,20 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../../client/build/index.html"));
 });
 
+const userSockets = {};
 const sockets = {};
 const wss = new ws.Server({ noServer: true });
 wss.on("connection", (ws) => {
+  let socketID = crypto.randomUUID();
+  sockets[socketID] = ws;
+
   let userID = null;
   let sessionID = null;
 
   const setUserID = (id) => {
     userID = id;
-    sockets[userID] ||= [];
-    sockets[userID].push(ws);
+    userSockets[userID] ||= [];
+    userSockets[userID].push(socketID);
   };
   const setSessionID = (id) => {
     sessionID = id;
@@ -43,17 +47,22 @@ wss.on("connection", (ws) => {
     const session = state.session(sessionID);
     if (session) {
       Object.keys(session.users).forEach((id) => {
-        (sockets[id] || []).forEach((socket) => {
-          socket.send(JSON.stringify(msg));
+        (userSockets[id] || []).forEach((userSocketID) => {
+          sockets[userSocketID].send(JSON.stringify(msg));
         });
       });
     }
   };
 
   ws.on("close", (code, reason) => {
-    // Remove user from their session
-    handlers["close"]({ userID, sessionID, broadcast });
-    sockets[userID] = sockets[userID].filter(s => s !== ws);
+    userSockets[userID] = userSockets[userID].filter(s => s !== socketID);
+
+    // If there are no user sockets left, we can remove them from the session
+    if (userSockets[userID].length === 0) {
+      handlers["close"]({ userID, sessionID, broadcast });
+    }
+
+    delete sockets[socketID];
   });
 
   ws.on("message", (data) => {
