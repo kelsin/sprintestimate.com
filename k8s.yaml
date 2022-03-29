@@ -50,6 +50,8 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
     external-dns.alpha.kubernetes.io/hostname: sprintestimate.com,www.sprintestimate.com
+    nginx.org/proxy-connect-timeout: "30s"
+    nginx.org/proxy-read-timeout: "1d"
     nginx.org/server-snippets: |
       if ($host ~ ^www\.sprintestimate\.com$) {
         return 301 https://sprintestimate.com$request_uri;
@@ -58,7 +60,6 @@ metadata:
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection "Upgrade";
       proxy_set_header Host $host;
-      proxy_read_timeout 1d;
 spec:
   rules:
     - host: sprintestimate.com
