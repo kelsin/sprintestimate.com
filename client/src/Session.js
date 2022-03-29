@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -13,15 +13,17 @@ const Session = () => {
   const params = useParams();
   const session = useSelector((state) => state.session);
   const [user] = useUser();
+  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
-    if (connected && user.id && (!session.id || params.id !== session.id)) {
+    if (connected && !joined && user.id && (!session.id || params.id !== session.id)) {
       send({
         type: "joinSession",
         sessionID: params.id,
       });
+      setJoined(true);
     }
-  }, [send, connected, user, session, params]);
+  }, [send, connected, user, session, params, joined, setJoined]);
 
   // Redirect to /user page if you don't have user data at all
   if (!user.name) {
